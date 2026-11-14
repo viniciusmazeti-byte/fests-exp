@@ -61,6 +61,7 @@ html.js .app{height:100%}
 .tabs{display:inline-flex;background:var(--fill);border-radius:9px;padding:2px;gap:2px}
 .tabs a{font-size:13px;font-weight:500;color:var(--fg);padding:5px 14px;border-radius:7px;white-space:nowrap}
 .tabs .sm{display:none}
+.tabs svg{display:none}
 .tabs a:hover{text-decoration:none;background:var(--line)}
 .tabs a[aria-current="page"],.tabs a[aria-current="page"]:hover{background:var(--seg-on);box-shadow:0 1px 3px rgba(0,0,0,.14)}
 html:not(.js) .tabs{display:none}
@@ -296,6 +297,51 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
   .frow{grid-template-columns:10px minmax(0,1fr) 104px 14px;gap:10px}
   .erow{grid-template-columns:78px minmax(0,1fr) auto;gap:10px}
 }
+
+/* ---------- celular: rolagem natural, abas embaixo, ficha em tela cheia ---------- */
+@media (max-width:760px){
+  html.js,html.js body{height:auto}
+  html.js body{overflow:visible}
+  html.js .app{height:auto}
+  .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:21;background:var(--glass)}
+  .top-in{grid-template-columns:1fr auto;height:46px;padding-block:0}
+  .tabs .lg,.dsrc{display:none}
+  .tabs .sm{display:inline}
+  .tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-radius:0;
+    background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--line);
+    padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));overflow:visible}
+  .tabs a,.tabs a:hover{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:500;padding:3px 0;color:var(--fg-3);background:none;box-shadow:none;border-radius:0}
+  .tabs a[aria-current="page"],.tabs a[aria-current="page"]:hover{color:var(--accent);background:none;box-shadow:none}
+  .tabs svg{display:block;width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .stage>.wrap{height:auto;padding-block:16px calc(86px + env(safe-area-inset-bottom,0px))}
+  .panel{height:auto;gap:14px}
+  .box{flex:none}
+  .pager,.sheet-f{display:none}
+  .ph p{font-size:13px}
+  html.js .cards{grid-template-columns:minmax(0,1fr);grid-auto-rows:auto}
+  .fcard{display:grid;grid-template-columns:64px minmax(0,1fr);column-gap:14px;row-gap:3px;padding:12px 14px;align-items:start}
+  .fcard .count{grid-column:1;grid-row:1/span 5;flex-direction:column;align-items:center;justify-content:center;gap:2px;align-self:stretch;border-right:1px solid var(--line);padding-right:12px}
+  .fcard .count b{font-size:28px}
+  .fcard .count span{font-size:11px}
+  .fcard>*:not(.count){grid-column:2;min-width:0}
+  .fc-top{font-size:11px}
+  .fc-city{display:block;margin-top:-2px}
+  .fc-meta{font-size:12px}
+  .fc-acts{margin-top:6px}
+  .kpis{flex-wrap:nowrap;width:100%;gap:6px}
+  html.js .sheet{height:auto}
+  .rows{flex:none}
+  html.js .cal-body{display:flex;flex-direction:column;gap:14px}
+  html.js .days{grid-auto-rows:54px}
+  html.js .split{display:block}
+  html.js .detail{position:fixed;inset:0;z-index:40;display:none;border-radius:0;box-shadow:none;
+    padding:calc(env(safe-area-inset-top,0px) + 16px) max(20px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));overflow-y:auto}
+  html.js .detail.open{display:flex}
+  .detail .acts{margin-top:8px}
+  .toolbar{gap:8px}
+  .tl-card{padding:14px 12px 10px}
+}
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important}
 }
@@ -306,10 +352,10 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
     <div class="wrap top-in">
       <div class="brand">Festivais Experimentais</div>
       <nav class="tabs" aria-label="Abas">
-        <a href="#agora" data-tab="agora" aria-current="page"><span class="lg">Fechando em breve</span><span class="sm">Fechando</span></a>
-        <a href="#linha" data-tab="linha"><span class="lg">Linha do tempo</span><span class="sm">Linha</span></a>
-        <a href="#calendario" data-tab="calendario">Calendário</a>
-        <a href="#festivais" data-tab="festivais">Festivais</a>
+        <a href="#agora" data-tab="agora" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"></circle><path d="M12 9v4l2.5 2M9.5 2.5h5"></path></svg><span class="lg">Fechando em breve</span><span class="sm">Fechando</span></a>
+        <a href="#linha" data-tab="linha"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9h18M3 16h18"></path><circle cx="8" cy="9" r="1.8"></circle><circle cx="16" cy="9" r="1.8"></circle><circle cx="12" cy="16" r="1.8"></circle></svg><span class="lg">Linha do tempo</span><span class="sm">Linha</span></a>
+        <a href="#calendario" data-tab="calendario"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg><span>Calendário</span></a>
+        <a href="#festivais" data-tab="festivais"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.5h11M9 12h11M9 17.5h11"></path><circle cx="4.5" cy="6.5" r="1.2"></circle><circle cx="4.5" cy="12" r="1.2"></circle><circle cx="4.5" cy="17.5" r="1.2"></circle></svg><span>Festivais</span></a>
       </nav>
       <div class="date">Hoje, <span id="today">14 nov 2026</span><span class="dsrc"> · dados de 14 nov 2026</span></div>
     </div>
@@ -322,16 +368,23 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
         <div class="ph">
           <div>
             <h2 id="h-agora">Fechando em breve</h2>
-            <p id="agora-sub">28 chamadas abertas, da mais urgente para a mais distante.</p>
+            <p id="agora-sub">30 chamadas abertas, da mais urgente para a mais distante.</p>
           </div>
           <div class="kpis">
-            <div class="kpi good"><b id="r-open">28</b><span>abertos</span></div>
-            <div class="kpi hot"><b id="r-soon">11</b><span>fecham em 30 dias</span></div>
-            <div class="kpi"><b id="r-free">7</b><span>abertos e gratuitos</span></div>
-            <div class="kpi"><b id="r-total">53</b><span>acompanhados</span></div>
+            <div class="kpi good"><b id="r-open">30</b><span>abertos</span></div>
+            <div class="kpi hot"><b id="r-soon">12</b><span>fecham em 30 dias</span></div>
+            <div class="kpi"><b id="r-free">9</b><span>abertos e gratuitos</span></div>
+            <div class="kpi"><b id="r-total">56</b><span>acompanhados</span></div>
           </div>
         </div>
         <div class="box" id="cards-box"><div class="cards" id="cards" style="--cols: 5; --ch: 266px;"><article class="card fcard is-soon">
+    <div class="fc-top"><span class="dot soon"></span>Brasil<span class="badge free">Gratuito</span></div>
+    <div class="count"><b>1</b><span>dia</span></div>
+    <h3 title="Mostra do Filme Livre">Mostra do Filme Livre</h3>
+    <p class="fc-city">São Paulo, Brasília e Rio de Janeiro</p>
+    <div class="fc-meta"><div><span>Prazo</span>15 nov 2026</div><div><span>Taxa</span>Gratuita</div></div>
+    <div class="fc-acts"><a class="pill primary" href="https://mostralivre.com" target="_blank" rel="noopener">Inscrever</a><button class="pill link" data-go="mfl">Detalhes</button></div>
+  </article><article class="card fcard is-soon">
     <div class="fc-top"><span class="dot soon"></span>Internacional</div>
     <div class="count"><b>2</b><span>dias</span></div>
     <h3 title="Cosmic Rays Film Festival">Cosmic Rays</h3>
@@ -487,6 +540,13 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
     <div class="fc-acts"><a class="pill primary" href="https://www.sfcinematheque.org/2027-call-for-entries/" target="_blank" rel="noopener">Inscrever</a><button class="pill link" data-go="crossroads">Detalhes</button></div>
   </article><article class="card fcard ">
     <div class="fc-top"><span class="dot open"></span>Internacional</div>
+    <div class="count"><b>107</b><span>dias</span></div>
+    <h3 title="FRACTO Experimental Film Encounter">FRACTO</h3>
+    <p class="fc-city">Berlim, Alemanha</p>
+    <div class="fc-meta"><div><span>Prazo</span>1 mar 2027</div><div><span>Taxa</span>Com taxa</div></div>
+    <div class="fc-acts"><a class="pill primary" href="https://fractofilm.com" target="_blank" rel="noopener">Inscrever</a><button class="pill link" data-go="fracto">Detalhes</button></div>
+  </article><article class="card fcard ">
+    <div class="fc-top"><span class="dot open"></span>Internacional</div>
     <div class="count"><b>113</b><span>dias</span></div>
     <h3 title="Adriatikino">Adriatikino</h3>
     <p class="fc-city">Fermo, Itália</p>
@@ -500,19 +560,19 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
     <div class="fc-meta"><div><span>Prazo</span>14 mar 2027</div><div><span>Taxa</span>Com taxa</div></div>
     <div class="fc-acts"><a class="pill primary" href="https://cloud.expcinema.org/site/en/call/artfilmvienna-2027" target="_blank" rel="noopener">Inscrever</a><button class="pill link" data-go="afv">Detalhes</button></div>
   </article><article class="card fcard ">
-    <div class="fc-top"><span class="dot open"></span>Internacional</div>
-    <div class="count"><b>137</b><span>dias (aprox.)</span></div>
-    <h3 title="FRACTO Experimental Film Encounter">FRACTO</h3>
-    <p class="fc-city">Berlim, Alemanha</p>
-    <div class="fc-meta"><div><span>Prazo</span>Março de 2027</div><div><span>Taxa</span>Ver regulamento</div></div>
-    <div class="fc-acts"><a class="pill primary" href="https://expcinema.org/site/en/call/fracto-2027-call-entries" target="_blank" rel="noopener">Inscrever</a><button class="pill link" data-go="fracto">Detalhes</button></div>
-  </article><article class="card fcard ">
     <div class="fc-top"><span class="dot open"></span>Brasil</div>
     <div class="count"><b>139</b><span>dias</span></div>
     <h3 title="Festival ECRÃ">Festival ECRÃ</h3>
     <p class="fc-city">Rio de Janeiro, RJ</p>
     <div class="fc-meta"><div><span>Prazo</span>2 abr 2027</div><div><span>Taxa</span>Brasil: US$ 11 a 18</div></div>
     <div class="fc-acts"><a class="pill primary" href="https://filmfreeway.com/FestivalECRA" target="_blank" rel="noopener">Inscrever</a><button class="pill link" data-go="ecra">Detalhes</button></div>
+  </article><article class="card fcard ">
+    <div class="fc-top"><span class="dot open"></span>Internacional<span class="badge free">Gratuito</span></div>
+    <div class="count"><b>147</b><span>dias</span></div>
+    <h3 title="Media City Film Festival">Media City</h3>
+    <p class="fc-city">Windsor, Canadá / Detroit, EUA</p>
+    <div class="fc-meta"><div><span>Prazo</span>10 abr 2027</div><div><span>Taxa</span>Historicamente gratuita</div></div>
+    <div class="fc-acts"><a class="pill primary" href="https://mediacityfilmfestival.com" target="_blank" rel="noopener">Inscrever</a><button class="pill link" data-go="mediacity">Detalhes</button></div>
   </article><article class="card fcard ">
     <div class="fc-top"><span class="dot open"></span>Internacional</div>
     <div class="count"><b>167</b><span>dias</span></div>
@@ -547,7 +607,7 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
             <div class="tl" id="tl">
               <span class="tl-lane a">Brasil</span><span class="tl-lane b">Internacional</span>
               <div class="tl-line a"></div><div class="tl-line b"></div>
-            <div class="tl-m" style="left: calc(0% + 96px);">nov</div><div class="tl-m" style="left: calc(8.21918% + 87.2877px);">dez</div><div class="tl-m major" style="left: calc(16.7123% + 78.2849px);">jan 2027</div><div class="tl-m" style="left: calc(25.2055% + 69.2822px);">fev</div><div class="tl-m" style="left: calc(32.8767% + 61.1507px);">mar</div><div class="tl-m" style="left: calc(41.3699% + 52.1479px);">abr</div><div class="tl-m" style="left: calc(49.589% + 43.4356px);">mai</div><div class="tl-m" style="left: calc(58.0822% + 34.4329px);">jun</div><div class="tl-m" style="left: calc(66.3014% + 25.7205px);">jul</div><div class="tl-m" style="left: calc(74.7945% + 16.7178px);">ago</div><div class="tl-m" style="left: calc(83.2877% + 7.71507px);">set</div><div class="tl-m" style="left: calc(91.5068% - 0.99726px);">out</div><div class="tl-now" style="left: calc(3.56164% + 92.2247px);"><span>Hoje</span></div><button class="tl-dot a  " aria-label="Festival ECRÃ: prazo 2 abr 2027" data-go="ecra" style="left: calc(41.6438% + 51.8575px);"></button><button class="tl-dot a  soon" aria-label="MESHES, cinema-imagem-sônica: prazo 25 nov 2026" data-go="meshes" style="left: calc(6.57534% + 89.0301px);"></button><button class="tl-dot a  " aria-label="Experimental Brasil: prazo 30 dez 2026" data-go="expbrasil" style="left: calc(16.1644% + 78.8658px);"></button><button class="tl-dot a closed " aria-label="Festival Fortaleza de Cinema: prazo 3 nov 2026" data-go="fortaleza" style="left: calc(0.547945% + 95.4192px);"></button><button class="tl-dot a  " aria-label="Festival de Cinema de Vitória: prazo 3 dez 2026" data-go="vitoria" style="left: calc(8.76712% + 86.7068px);"></button><button class="tl-dot a  " aria-label="Curta Cinema, Festival Internacional de Curtas do Rio: prazo 8 jan 2027" data-go="curtacinema" style="left: calc(18.6301% + 76.2521px);"></button><button class="tl-dot b  " aria-label="art+film+vienna: prazo 14 mar 2027" data-go="afv" style="left: calc(36.4384% + 57.3753px);"></button><button class="tl-dot b  " aria-label="Underneath the Floorboards: prazo 30 nov 2026" data-go="underfloor" style="left: calc(7.94521% + 87.5781px);"></button><button class="tl-dot b  " aria-label="Grain Urbain: prazo 30 nov 2026" data-go="grain" style="left: calc(7.94521% + 87.5781px);"></button><button class="tl-dot b  soon" aria-label="Cosmic Rays Film Festival: prazo 16 nov 2026" data-go="cosmic" style="left: calc(4.10959% + 91.6438px);"></button><button class="tl-dot b  " aria-label="London Experimental: prazo 30 nov 2026" data-go="lx" style="left: calc(7.94521% + 87.5781px);"></button><button class="tl-dot b  " aria-label="Kurzfilmtage Oberhausen: prazo 18 jan 2027" data-go="oberhausen" style="left: calc(21.3699% + 73.3479px);"></button><button class="tl-dot b  " aria-label="European Media Art Festival (EMAF): prazo 15 dez 2026" data-go="emaf" style="left: calc(12.0548% + 83.2219px);"></button><button class="tl-dot b  " aria-label="Milan Machinima Festival: prazo 30 dez 2026" data-go="milan" style="left: calc(16.1644% + 78.8658px);"></button><button class="tl-dot b  " aria-label="FRACTO Experimental Film Encounter: prazo Março de 2027" data-go="fracto" style="left: calc(41.0959% + 52.4384px);"></button><button class="tl-dot b  " aria-label="Braziers International Film Festival: prazo 30 mai 2027" data-go="braziers" style="left: calc(57.5342% + 35.0137px);"></button><button class="tl-dot b  " aria-label="CROSSROADS, San Francisco Cinematheque: prazo 28 fev 2027" data-go="crossroads" style="left: calc(32.6027% + 61.4411px);"></button><button class="tl-dot b  " aria-label="VIENNA SHORTS, Animation Avantgarde: prazo 31 jan 2027" data-go="vienna" style="left: calc(24.9315% + 69.5726px);"></button><button class="tl-dot b  " aria-label="Go Short, International Short Film Festival Nijmegen: prazo 15 dez 2026" data-go="goshort" style="left: calc(12.0548% + 83.2219px);"></button><button class="tl-dot b  " aria-label="BAFICI, Buenos Aires Festival Internacional de Cine Independiente: prazo 18 dez 2026" data-go="bafici" style="left: calc(12.8767% + 82.3507px);"></button><button class="tl-dot b closed " aria-label="Experiments in Cinema: prazo 1 nov 2026" data-go="eic" style="left: calc(0% + 96px);"></button><button class="tl-dot b closed " aria-label="Berlinale Shorts e Forum Expanded: prazo 4 nov 2026" data-go="berlinale" style="left: calc(0.821918% + 95.1288px);"></button><button class="tl-dot b closed " aria-label="Tampere Film Festival: prazo 3 nov 2026" data-go="tampere" style="left: calc(0.547945% + 95.4192px);"></button><button class="tl-dot b  soon" aria-label="Onion City Experimental Film Festival: prazo 19 nov 2026" data-go="onioncity" style="left: calc(4.93151% + 90.7726px);"></button><button class="tl-dot b  " aria-label="Avvistamenti, Open Call for Experimental Films: prazo 30 nov 2026" data-go="avvistamenti" style="left: calc(7.94521% + 87.5781px);"></button><button class="tl-dot b  " aria-label="Wide Open Experimental Film Festival: prazo 30 nov 2026" data-go="woeff" style="left: calc(7.94521% + 87.5781px);"></button><button class="tl-dot b  " aria-label="Istanbul Experimental Film Festival: prazo 1 dez 2026" data-go="istanbul" style="left: calc(8.21918% + 87.2877px);"></button><button class="tl-dot b  " aria-label="Odds &amp; Ends Experimental Film Festival: prazo 7 dez 2026" data-go="oddsends" style="left: calc(9.86301% + 85.5452px);"></button><button class="tl-dot b  " aria-label="Meshwork, Pittsburgh Visual Music Festival: prazo 20 dez 2026" data-go="meshwork" style="left: calc(13.4247% + 81.7699px);"></button><button class="tl-dot b  " aria-label="Kurzfilm Festival Hamburg: prazo 31 jan 2027" data-go="hamburg" style="left: calc(24.9315% + 69.5726px);"></button><button class="tl-dot b  " aria-label="Adriatikino: prazo 7 mar 2027" data-go="adriatikino" style="left: calc(34.5205% + 59.4082px);"></button><button class="tl-dot b  " aria-label="Curtas Vila do Conde, Competição Experimental: prazo 30 abr 2027" data-go="viladoconde" style="left: calc(49.3151% + 43.726px);"></button></div>
+            <div class="tl-m" style="left: calc(0% + 96px);">nov</div><div class="tl-m" style="left: calc(8.21918% + 87.2877px);">dez</div><div class="tl-m major" style="left: calc(16.7123% + 78.2849px);">jan 2027</div><div class="tl-m" style="left: calc(25.2055% + 69.2822px);">fev</div><div class="tl-m" style="left: calc(32.8767% + 61.1507px);">mar</div><div class="tl-m" style="left: calc(41.3699% + 52.1479px);">abr</div><div class="tl-m" style="left: calc(49.589% + 43.4356px);">mai</div><div class="tl-m" style="left: calc(58.0822% + 34.4329px);">jun</div><div class="tl-m" style="left: calc(66.3014% + 25.7205px);">jul</div><div class="tl-m" style="left: calc(74.7945% + 16.7178px);">ago</div><div class="tl-m" style="left: calc(83.2877% + 7.71507px);">set</div><div class="tl-m" style="left: calc(91.5068% - 0.99726px);">out</div><div class="tl-now" style="left: calc(3.56164% + 92.2247px);"><span>Hoje</span></div><button class="tl-dot a  " aria-label="Festival ECRÃ: prazo 2 abr 2027" data-go="ecra" style="left: calc(41.6438% + 51.8575px);"></button><button class="tl-dot a  soon" aria-label="MESHES, cinema-imagem-sônica: prazo 25 nov 2026" data-go="meshes" style="left: calc(6.57534% + 89.0301px);"></button><button class="tl-dot a  soon" aria-label="Mostra do Filme Livre: prazo 15 nov 2026" data-go="mfl" style="left: calc(3.83562% + 91.9342px);"></button><button class="tl-dot a  " aria-label="Experimental Brasil: prazo 30 dez 2026" data-go="expbrasil" style="left: calc(16.1644% + 78.8658px);"></button><button class="tl-dot a closed " aria-label="Festival Fortaleza de Cinema: prazo 3 nov 2026" data-go="fortaleza" style="left: calc(0.547945% + 95.4192px);"></button><button class="tl-dot a  " aria-label="Festival de Cinema de Vitória: prazo 3 dez 2026" data-go="vitoria" style="left: calc(8.76712% + 86.7068px);"></button><button class="tl-dot a  " aria-label="Curta Cinema, Festival Internacional de Curtas do Rio: prazo 8 jan 2027" data-go="curtacinema" style="left: calc(18.6301% + 76.2521px);"></button><button class="tl-dot b  " aria-label="art+film+vienna: prazo 14 mar 2027" data-go="afv" style="left: calc(36.4384% + 57.3753px);"></button><button class="tl-dot b  " aria-label="Underneath the Floorboards: prazo 30 nov 2026" data-go="underfloor" style="left: calc(7.94521% + 87.5781px);"></button><button class="tl-dot b  " aria-label="Grain Urbain: prazo 30 nov 2026" data-go="grain" style="left: calc(7.94521% + 87.5781px);"></button><button class="tl-dot b  soon" aria-label="Cosmic Rays Film Festival: prazo 16 nov 2026" data-go="cosmic" style="left: calc(4.10959% + 91.6438px);"></button><button class="tl-dot b  " aria-label="London Experimental: prazo 30 nov 2026" data-go="lx" style="left: calc(7.94521% + 87.5781px);"></button><button class="tl-dot b  " aria-label="Kurzfilmtage Oberhausen: prazo 18 jan 2027" data-go="oberhausen" style="left: calc(21.3699% + 73.3479px);"></button><button class="tl-dot b  " aria-label="European Media Art Festival (EMAF): prazo 15 dez 2026" data-go="emaf" style="left: calc(12.0548% + 83.2219px);"></button><button class="tl-dot b  " aria-label="Media City Film Festival: prazo 10 abr 2027" data-go="mediacity" style="left: calc(43.8356% + 49.5342px);"></button><button class="tl-dot b  " aria-label="Milan Machinima Festival: prazo 30 dez 2026" data-go="milan" style="left: calc(16.1644% + 78.8658px);"></button><button class="tl-dot b  " aria-label="FRACTO Experimental Film Encounter: prazo 1 mar 2027" data-go="fracto" style="left: calc(32.8767% + 61.1507px);"></button><button class="tl-dot b  " aria-label="Braziers International Film Festival: prazo 30 mai 2027" data-go="braziers" style="left: calc(57.5342% + 35.0137px);"></button><button class="tl-dot b  " aria-label="CROSSROADS, San Francisco Cinematheque: prazo 28 fev 2027" data-go="crossroads" style="left: calc(32.6027% + 61.4411px);"></button><button class="tl-dot b  " aria-label="VIENNA SHORTS, Animation Avantgarde: prazo 31 jan 2027" data-go="vienna" style="left: calc(24.9315% + 69.5726px);"></button><button class="tl-dot b  " aria-label="Go Short, International Short Film Festival Nijmegen: prazo 15 dez 2026" data-go="goshort" style="left: calc(12.0548% + 83.2219px);"></button><button class="tl-dot b  " aria-label="BAFICI, Buenos Aires Festival Internacional de Cine Independiente: prazo 18 dez 2026" data-go="bafici" style="left: calc(12.8767% + 82.3507px);"></button><button class="tl-dot b closed " aria-label="Experiments in Cinema: prazo 1 nov 2026" data-go="eic" style="left: calc(0% + 96px);"></button><button class="tl-dot b closed " aria-label="Berlinale Shorts e Forum Expanded: prazo 4 nov 2026" data-go="berlinale" style="left: calc(0.821918% + 95.1288px);"></button><button class="tl-dot b closed " aria-label="Tampere Film Festival: prazo 3 nov 2026" data-go="tampere" style="left: calc(0.547945% + 95.4192px);"></button><button class="tl-dot b  soon" aria-label="Onion City Experimental Film Festival: prazo 19 nov 2026" data-go="onioncity" style="left: calc(4.93151% + 90.7726px);"></button><button class="tl-dot b  " aria-label="Avvistamenti, Open Call for Experimental Films: prazo 30 nov 2026" data-go="avvistamenti" style="left: calc(7.94521% + 87.5781px);"></button><button class="tl-dot b  " aria-label="Wide Open Experimental Film Festival: prazo 30 nov 2026" data-go="woeff" style="left: calc(7.94521% + 87.5781px);"></button><button class="tl-dot b  " aria-label="Istanbul Experimental Film Festival: prazo 1 dez 2026" data-go="istanbul" style="left: calc(8.21918% + 87.2877px);"></button><button class="tl-dot b  " aria-label="Odds &amp; Ends Experimental Film Festival: prazo 7 dez 2026" data-go="oddsends" style="left: calc(9.86301% + 85.5452px);"></button><button class="tl-dot b  " aria-label="Meshwork, Pittsburgh Visual Music Festival: prazo 20 dez 2026" data-go="meshwork" style="left: calc(13.4247% + 81.7699px);"></button><button class="tl-dot b  " aria-label="Kurzfilm Festival Hamburg: prazo 31 jan 2027" data-go="hamburg" style="left: calc(24.9315% + 69.5726px);"></button><button class="tl-dot b  " aria-label="Adriatikino: prazo 7 mar 2027" data-go="adriatikino" style="left: calc(34.5205% + 59.4082px);"></button><button class="tl-dot b  " aria-label="Curtas Vila do Conde, Competição Experimental: prazo 30 abr 2027" data-go="viladoconde" style="left: calc(49.3151% + 43.726px);"></button></div>
           </div>
         </div>
         <div class="box">
@@ -557,6 +617,9 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
               <div class="pager" id="pg-ev"></div>
             </div>
             <div class="rows" id="ev-rows"><div class="erow">
+      <div class="when">19 a 29 nov<small>2026</small></div>
+      <div class="what"><b>forumdoc.bh, Festival do Filme Documentário e Etnográfico</b><small>Belo Horizonte, MG</small></div>
+      <button class="pill link" data-go="forumdoc">Detalhes</button></div><div class="erow">
       <div class="when">8 a 13 dez<small>2026</small></div>
       <div class="what"><b>Festival Fortaleza de Cinema</b><small>Fortaleza, CE</small></div>
       <button class="pill link" data-go="fortaleza">Detalhes</button></div><div class="erow">
@@ -614,6 +677,9 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
       <div class="when">15 a 20 mai<small>2027</small></div>
       <div class="what"><b>Festival de Cinema de Vitória</b><small>Vitória, ES</small></div>
       <button class="pill link" data-go="vitoria">Detalhes</button></div><div class="erow">
+      <div class="when">20 a 21 mai<small>2027</small></div>
+      <div class="what"><b>FRACTO Experimental Film Encounter</b><small>Berlim, Alemanha</small></div>
+      <button class="pill link" data-go="fracto">Detalhes</button></div><div class="erow">
       <div class="when">25 a 30 mai<small>2027</small></div>
       <div class="what"><b>VIENNA SHORTS, Animation Avantgarde</b><small>Viena, Áustria</small></div>
       <button class="pill link" data-go="vienna">Detalhes</button></div><div class="erow">
@@ -625,7 +691,10 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
       <button class="pill link" data-go="hamburg">Detalhes</button></div><div class="erow">
       <div class="when">9 a 18 jul<small>2027</small></div>
       <div class="what"><b>Curtas Vila do Conde, Competição Experimental</b><small>Vila do Conde, Portugal</small></div>
-      <button class="pill link" data-go="viladoconde">Detalhes</button></div></div>
+      <button class="pill link" data-go="viladoconde">Detalhes</button></div><div class="erow">
+      <div class="when">14 a 18 set<small>2027</small></div>
+      <div class="what"><b>Media City Film Festival</b><small>Windsor, Canadá / Detroit, EUA</small></div>
+      <button class="pill link" data-go="mediacity">Detalhes</button></div></div>
           </div>
         </div>
       </section>
@@ -647,11 +716,11 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
         <div class="cal-body">
           <div class="card cal-grid">
             <div class="wd" aria-hidden="true"><span>Dom</span><span>Seg</span><span>Ter</span><span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span></div>
-            <div class="days" id="days"><button class="day   " data-k="20261101" aria-label="1 de novembro, 3 eventos"><span class="n">1</span><span class="chips"><span class="chip fe s e" title="Festival: Janela Internacional de Cinema do Recife">Janela Recife</span><span class="chip fe s " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">FestCurtasBH</span><span class="chip dl closed" title="Prazo: Experiments in Cinema">Experiments in Cinema</span></span></button><button class="day   " data-k="20261102" aria-label="2 de novembro, 1 evento"><span class="n">2</span><span class="chips"><span class="chip fe  " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span></span></button><button class="day   " data-k="20261103" aria-label="3 de novembro, 3 eventos"><span class="n">3</span><span class="chips"><span class="chip fe  " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span><span class="chip dl closed" title="Prazo: Festival Fortaleza de Cinema">Fortaleza de Cinema</span><span class="chip dl closed" title="Prazo: Tampere Film Festival">Tampere</span></span></button><button class="day   " data-k="20261104" aria-label="4 de novembro, 2 eventos"><span class="n">4</span><span class="chips"><span class="chip fe  " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span><span class="chip dl closed" title="Prazo: Berlinale Shorts e Forum Expanded">Berlinale</span></span></button><button class="day   " data-k="20261105" aria-label="5 de novembro, 1 evento"><span class="n">5</span><span class="chips"><span class="chip fe  " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span></span></button><button class="day   " data-k="20261106" aria-label="6 de novembro, 1 evento"><span class="n">6</span><span class="chips"><span class="chip fe  " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span></span></button><button class="day   " data-k="20261107" aria-label="7 de novembro, 1 evento"><span class="n">7</span><span class="chips"><span class="chip fe  e" title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span></span></button><button class="day   " data-k="20261108" aria-label="8 de novembro, 1 evento"><span class="n">8</span><span class="chips"><span class="chip fe s e" title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">FestCurtasBH</span></span></button><button class="day   " data-k="20261109" aria-label="9 de novembro"><span class="n">9</span><span class="chips"></span></button><button class="day   " data-k="20261110" aria-label="10 de novembro"><span class="n">10</span><span class="chips"></span></button><button class="day   " data-k="20261111" aria-label="11 de novembro"><span class="n">11</span><span class="chips"></span></button><button class="day   " data-k="20261112" aria-label="12 de novembro"><span class="n">12</span><span class="chips"></span></button><button class="day   " data-k="20261113" aria-label="13 de novembro"><span class="n">13</span><span class="chips"></span></button><button class="day  today " data-k="20261114" aria-label="14 de novembro"><span class="n">14</span><span class="chips"></span></button><button class="day   " data-k="20261115" aria-label="15 de novembro"><span class="n">15</span><span class="chips"></span></button><button class="day   " data-k="20261116" aria-label="16 de novembro, 1 evento"><span class="n">16</span><span class="chips"><span class="chip dl soon" title="Prazo: Cosmic Rays Film Festival">Cosmic Rays</span></span></button><button class="day   " data-k="20261117" aria-label="17 de novembro"><span class="n">17</span><span class="chips"></span></button><button class="day   " data-k="20261118" aria-label="18 de novembro"><span class="n">18</span><span class="chips"></span></button><button class="day   " data-k="20261119" aria-label="19 de novembro, 1 evento"><span class="n">19</span><span class="chips"><span class="chip dl soon" title="Prazo: Onion City Experimental Film Festival">Onion City</span></span></button><button class="day   " data-k="20261120" aria-label="20 de novembro"><span class="n">20</span><span class="chips"></span></button><button class="day   " data-k="20261121" aria-label="21 de novembro"><span class="n">21</span><span class="chips"></span></button><button class="day   " data-k="20261122" aria-label="22 de novembro"><span class="n">22</span><span class="chips"></span></button><button class="day   " data-k="20261123" aria-label="23 de novembro"><span class="n">23</span><span class="chips"></span></button><button class="day   " data-k="20261124" aria-label="24 de novembro"><span class="n">24</span><span class="chips"></span></button><button class="day   " data-k="20261125" aria-label="25 de novembro, 1 evento"><span class="n">25</span><span class="chips"><span class="chip dl soon" title="Prazo: MESHES, cinema-imagem-sônica">MESHES</span></span></button><button class="day   " data-k="20261126" aria-label="26 de novembro"><span class="n">26</span><span class="chips"></span></button><button class="day   " data-k="20261127" aria-label="27 de novembro"><span class="n">27</span><span class="chips"></span></button><button class="day   " data-k="20261128" aria-label="28 de novembro"><span class="n">28</span><span class="chips"></span></button><button class="day   " data-k="20261129" aria-label="29 de novembro"><span class="n">29</span><span class="chips"></span></button><button class="day   " data-k="20261130" aria-label="30 de novembro, 5 eventos"><span class="n">30</span><span class="chips"><span class="chip dl " title="Prazo: Underneath the Floorboards">Underneath the Floorboards</span><span class="chip dl " title="Prazo: Grain Urbain">Grain Urbain</span><span class="plus">+3</span></span></button><button class="day out  " data-k="20261201" aria-label="1 de dezembro, 1 evento"><span class="n">1</span><span class="chips"><span class="chip dl " title="Prazo: Istanbul Experimental Film Festival">Istanbul Experimental</span></span></button><button class="day out  " data-k="20261202" aria-label="2 de dezembro"><span class="n">2</span><span class="chips"></span></button><button class="day out  " data-k="20261203" aria-label="3 de dezembro, 1 evento"><span class="n">3</span><span class="chips"><span class="chip dl " title="Prazo: Festival de Cinema de Vitória">Festival de Vitória</span></span></button><button class="day out  " data-k="20261204" aria-label="4 de dezembro"><span class="n">4</span><span class="chips"></span></button><button class="day out  " data-k="20261205" aria-label="5 de dezembro"><span class="n">5</span><span class="chips"></span></button></div>
+            <div class="days" id="days"><button class="day   " data-k="20261101" aria-label="1 de novembro, 3 eventos"><span class="n">1</span><span class="chips"><span class="chip fe s e" title="Festival: Janela Internacional de Cinema do Recife">Janela Recife</span><span class="chip fe s " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">FestCurtasBH</span><span class="chip dl closed" title="Prazo: Experiments in Cinema">Experiments in Cinema</span></span></button><button class="day   " data-k="20261102" aria-label="2 de novembro, 1 evento"><span class="n">2</span><span class="chips"><span class="chip fe  " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span></span></button><button class="day   " data-k="20261103" aria-label="3 de novembro, 3 eventos"><span class="n">3</span><span class="chips"><span class="chip fe  " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span><span class="chip dl closed" title="Prazo: Festival Fortaleza de Cinema">Fortaleza de Cinema</span><span class="chip dl closed" title="Prazo: Tampere Film Festival">Tampere</span></span></button><button class="day   " data-k="20261104" aria-label="4 de novembro, 2 eventos"><span class="n">4</span><span class="chips"><span class="chip fe  " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span><span class="chip dl closed" title="Prazo: Berlinale Shorts e Forum Expanded">Berlinale</span></span></button><button class="day   " data-k="20261105" aria-label="5 de novembro, 1 evento"><span class="n">5</span><span class="chips"><span class="chip fe  " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span></span></button><button class="day   " data-k="20261106" aria-label="6 de novembro, 1 evento"><span class="n">6</span><span class="chips"><span class="chip fe  " title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span></span></button><button class="day   " data-k="20261107" aria-label="7 de novembro, 1 evento"><span class="n">7</span><span class="chips"><span class="chip fe  e" title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">&nbsp;</span></span></button><button class="day   " data-k="20261108" aria-label="8 de novembro, 1 evento"><span class="n">8</span><span class="chips"><span class="chip fe s e" title="Festival: FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">FestCurtasBH</span></span></button><button class="day   " data-k="20261109" aria-label="9 de novembro"><span class="n">9</span><span class="chips"></span></button><button class="day   " data-k="20261110" aria-label="10 de novembro"><span class="n">10</span><span class="chips"></span></button><button class="day   " data-k="20261111" aria-label="11 de novembro"><span class="n">11</span><span class="chips"></span></button><button class="day   " data-k="20261112" aria-label="12 de novembro"><span class="n">12</span><span class="chips"></span></button><button class="day   " data-k="20261113" aria-label="13 de novembro"><span class="n">13</span><span class="chips"></span></button><button class="day  today " data-k="20261114" aria-label="14 de novembro"><span class="n">14</span><span class="chips"></span></button><button class="day   " data-k="20261115" aria-label="15 de novembro, 1 evento"><span class="n">15</span><span class="chips"><span class="chip dl soon" title="Prazo: Mostra do Filme Livre">Mostra do Filme Livre</span></span></button><button class="day   " data-k="20261116" aria-label="16 de novembro, 1 evento"><span class="n">16</span><span class="chips"><span class="chip dl soon" title="Prazo: Cosmic Rays Film Festival">Cosmic Rays</span></span></button><button class="day   " data-k="20261117" aria-label="17 de novembro"><span class="n">17</span><span class="chips"></span></button><button class="day   " data-k="20261118" aria-label="18 de novembro"><span class="n">18</span><span class="chips"></span></button><button class="day   " data-k="20261119" aria-label="19 de novembro, 2 eventos"><span class="n">19</span><span class="chips"><span class="chip fe s " title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">forumdoc.bh</span><span class="chip dl soon" title="Prazo: Onion City Experimental Film Festival">Onion City</span></span></button><button class="day   " data-k="20261120" aria-label="20 de novembro, 1 evento"><span class="n">20</span><span class="chips"><span class="chip fe  " title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">&nbsp;</span></span></button><button class="day   " data-k="20261121" aria-label="21 de novembro, 1 evento"><span class="n">21</span><span class="chips"><span class="chip fe  e" title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">&nbsp;</span></span></button><button class="day   " data-k="20261122" aria-label="22 de novembro, 1 evento"><span class="n">22</span><span class="chips"><span class="chip fe s " title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">forumdoc.bh</span></span></button><button class="day   " data-k="20261123" aria-label="23 de novembro, 1 evento"><span class="n">23</span><span class="chips"><span class="chip fe  " title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">&nbsp;</span></span></button><button class="day   " data-k="20261124" aria-label="24 de novembro, 1 evento"><span class="n">24</span><span class="chips"><span class="chip fe  " title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">&nbsp;</span></span></button><button class="day   " data-k="20261125" aria-label="25 de novembro, 2 eventos"><span class="n">25</span><span class="chips"><span class="chip fe  " title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">&nbsp;</span><span class="chip dl soon" title="Prazo: MESHES, cinema-imagem-sônica">MESHES</span></span></button><button class="day   " data-k="20261126" aria-label="26 de novembro, 1 evento"><span class="n">26</span><span class="chips"><span class="chip fe  " title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">&nbsp;</span></span></button><button class="day   " data-k="20261127" aria-label="27 de novembro, 1 evento"><span class="n">27</span><span class="chips"><span class="chip fe  " title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">&nbsp;</span></span></button><button class="day   " data-k="20261128" aria-label="28 de novembro, 1 evento"><span class="n">28</span><span class="chips"><span class="chip fe  e" title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">&nbsp;</span></span></button><button class="day   " data-k="20261129" aria-label="29 de novembro, 1 evento"><span class="n">29</span><span class="chips"><span class="chip fe s e" title="Festival: forumdoc.bh, Festival do Filme Documentário e Etnográfico">forumdoc.bh</span></span></button><button class="day   " data-k="20261130" aria-label="30 de novembro, 5 eventos"><span class="n">30</span><span class="chips"><span class="chip dl " title="Prazo: Underneath the Floorboards">Underneath the Floorboards</span><span class="chip dl " title="Prazo: Grain Urbain">Grain Urbain</span><span class="plus">+3</span></span></button><button class="day out  " data-k="20261201" aria-label="1 de dezembro, 1 evento"><span class="n">1</span><span class="chips"><span class="chip dl " title="Prazo: Istanbul Experimental Film Festival">Istanbul Experimental</span></span></button><button class="day out  " data-k="20261202" aria-label="2 de dezembro"><span class="n">2</span><span class="chips"></span></button><button class="day out  " data-k="20261203" aria-label="3 de dezembro, 1 evento"><span class="n">3</span><span class="chips"><span class="chip dl " title="Prazo: Festival de Cinema de Vitória">Festival de Vitória</span></span></button><button class="day out  " data-k="20261204" aria-label="4 de dezembro"><span class="n">4</span><span class="chips"></span></button><button class="day out  " data-k="20261205" aria-label="5 de dezembro"><span class="n">5</span><span class="chips"></span></button></div>
           </div>
           <div class="card sheet">
             <div class="sheet-h">
-              <div><h3 id="ag-title">Em novembro</h3><p id="ag-sub">12 prazos · 2 festivais</p></div>
+              <div><h3 id="ag-title">Em novembro</h3><p id="ag-sub">13 prazos · 3 festivais</p></div>
               <div class="pager" id="pg-ag"></div>
             </div>
             <div class="rows" id="ag-rows"><div class="arow"><div class="d"><b>1</b><span>nov</span></div>
@@ -660,8 +729,10 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
       <div class="t"><small><i class="dot "></i>Prazo</small><b data-go="eic" style="cursor:pointer">Experiments in Cinema</b><em>há 13 dias</em></div><button class="pill link" data-go="eic">Detalhes</button></div><div class="arow"><div class="d"><b>3</b><span>nov</span></div>
       <div class="t"><small><i class="dot "></i>Prazo</small><b data-go="fortaleza" style="cursor:pointer">Festival Fortaleza de Cinema</b><em>há 11 dias</em></div><button class="pill link" data-go="fortaleza">Detalhes</button></div><div class="arow"><div class="d"><b>3</b><span>nov</span></div>
       <div class="t"><small><i class="dot "></i>Prazo</small><b data-go="tampere" style="cursor:pointer">Tampere Film Festival</b><em>há 11 dias</em></div><button class="pill link" data-go="tampere">Detalhes</button></div><div class="arow"><div class="d"><b>4</b><span>nov</span></div>
-      <div class="t"><small><i class="dot "></i>Prazo</small><b data-go="berlinale" style="cursor:pointer">Berlinale Shorts e Forum Expanded</b><em>há 10 dias</em></div><button class="pill link" data-go="berlinale">Detalhes</button></div><div class="arow"><div class="d"><b>16</b><span>nov</span></div>
+      <div class="t"><small><i class="dot "></i>Prazo</small><b data-go="berlinale" style="cursor:pointer">Berlinale Shorts e Forum Expanded</b><em>há 10 dias</em></div><button class="pill link" data-go="berlinale">Detalhes</button></div><div class="arow"><div class="d"><b>15</b><span>nov</span></div>
+      <div class="t"><small><i class="dot soon"></i>Prazo</small><b data-go="mfl" style="cursor:pointer">Mostra do Filme Livre</b><em>fecha amanhã</em></div><a class="pill primary" href="https://mostralivre.com" target="_blank" rel="noopener">Inscrever</a></div><div class="arow"><div class="d"><b>16</b><span>nov</span></div>
       <div class="t"><small><i class="dot soon"></i>Prazo</small><b data-go="cosmic" style="cursor:pointer">Cosmic Rays Film Festival</b><em>faltam 2 dias</em></div><a class="pill primary" href="https://cloud.expcinema.org/site/en/call/2027-cosmic-rays-film-festival-call-entries" target="_blank" rel="noopener">Inscrever</a></div><div class="arow"><div class="d"><b>19</b><span>nov</span></div>
+      <div class="t"><small><i class="bar"></i>Festival, 19 nov a 29 nov</small><b data-go="forumdoc" style="cursor:pointer">forumdoc.bh, Festival do Filme Documentário e Etnográfico</b><em>Belo Horizonte, MG</em></div><button class="pill link" data-go="forumdoc">Detalhes</button></div><div class="arow"><div class="d"><b>19</b><span>nov</span></div>
       <div class="t"><small><i class="dot soon"></i>Prazo</small><b data-go="onioncity" style="cursor:pointer">Onion City Experimental Film Festival</b><em>faltam 5 dias</em></div><a class="pill primary" href="https://filmfreeway.com/OnionCityFF" target="_blank" rel="noopener">Inscrever</a></div><div class="arow"><div class="d"><b>25</b><span>nov</span></div>
       <div class="t"><small><i class="dot soon"></i>Prazo</small><b data-go="meshes" style="cursor:pointer">MESHES, cinema-imagem-sônica</b><em>faltam 11 dias</em></div><a class="pill primary" href="https://cloud.expcinema.org/site/en/call/meshes-cinema-imagem-sonica" target="_blank" rel="noopener">Inscrever</a></div><div class="arow"><div class="d"><b>30</b><span>nov</span></div>
       <div class="t"><small><i class="dot open"></i>Prazo</small><b data-go="underfloor" style="cursor:pointer">Underneath the Floorboards</b><em>faltam 16 dias</em></div><a class="pill primary" href="https://cloud.expcinema.org/site/en/call/underneath-floorboards-late-deadline-open-call-0" target="_blank" rel="noopener">Inscrever</a></div><div class="arow"><div class="d"><b>30</b><span>nov</span></div>
@@ -682,7 +753,7 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
         <div class="ph">
           <div>
             <h2 id="h-fest">Festivais</h2>
-            <p id="fest-sub">53 festivais · 15 no Brasil, 38 no exterior</p>
+            <p id="fest-sub">56 festivais · 16 no Brasil, 40 no exterior</p>
           </div>
         </div>
         <div class="toolbar" role="toolbar" aria-label="Filtros">
@@ -702,7 +773,10 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
         </div>
         <div class="split">
           <div class="card sheet">
-            <div class="rows" id="list-rows"><div class="ghead">Brasil<span>15 festivais, 5 abertos</span></div><button class="frow sel" data-sel="meshes" aria-label="MESHES, cinema-imagem-sônica">
+            <div class="rows" id="list-rows"><div class="ghead">Brasil<span>16 festivais, 6 abertos</span></div><button class="frow sel" data-sel="mfl" aria-label="Mostra do Filme Livre">
+    <span class="dot soon"></span>
+    <span class="nm"><b>Mostra do Filme Livre</b><small>São Paulo, Brasília e Rio de Janeiro · Gratuita</small></span>
+    <span class="dl">15 nov 2026<small class="soon">fecha amanhã</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Criada em 2002, exibe cinema brasileiro independente de qualquer época, duração, formato e gênero, com entrada franca. Segundo o regulamento publicado no site oficial, as inscrições vão de 7 de outubro a 15 de novembro de 2026. <a href="https://mostralivre.com" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="meshes" aria-label="MESHES, cinema-imagem-sônica">
     <span class="dot soon"></span>
     <span class="nm"><b>MESHES, cinema-imagem-sônica</b><small>São Paulo, SP (online) · Gratuita</small></span>
     <span class="dl">25 nov 2026<small class="soon">faltam 11 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Mostra online dedicada a obras em que o som é a matéria que conduz a imagem, e não trilha sonora. Boa porta para trabalhos de cinema expandido e audiovisual sonoro. <a href="https://cloud.expcinema.org/site/en/call/meshes-cinema-imagem-sonica" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="vitoria" aria-label="Festival de Cinema de Vitória">
@@ -717,37 +791,37 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
     <span class="dl">8 jan 2027<small class="open">faltam 55 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Um dos festivais de curta mais antigos do país, com competições nacional e internacional que qualificam para o Oscar. Aceita todos os gêneros, inclusive experimental. <a href="https://curtacinema.com.br" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="ecra" aria-label="Festival ECRÃ">
     <span class="dot open"></span>
     <span class="nm"><b>Festival ECRÃ</b><small>Rio de Janeiro, RJ · Brasil: US$ 11 a 18</small></span>
-    <span class="dl">2 abr 2027<small class="open">faltam 139 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Um dos principais eventos de cinema e arte experimental do país. A 11ª edição acontece na Cinemateca do MAM, no CCBB e no CCJF. Aceita filmes de qualquer duração, games e códigos criativos, instalações e videoarte, com categorias separadas para obras brasileiras. <a href="https://filmfreeway.com/FestivalECRA" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="fronteira" aria-label="Fronteira, Festival Internacional do Filme Documentário e Experimental">
-    <span class="dot tbc"></span>
-    <span class="nm"><b>Fronteira, Festival Internacional do Filme Documentário e Experimental</b><small>Goiânia, GO / Brasília, DF · Historicamente gratuita</small></span>
-    <span class="dl"><span class="est">A confirmar</span><small>Sem edição anunciada</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Único festival brasileiro com o experimental no nome, trabalhando a fronteira entre documentário e cinema experimental. Aceitava obras de qualquer duração e nacionalidade, inclusive work in progress. <a href="https://www.fronteirafestival.com" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="mfl" aria-label="Mostra do Filme Livre">
-    <span class="dot tbc"></span>
-    <span class="nm"><b>Mostra do Filme Livre</b><small>Rio de Janeiro e São Paulo (CCBB) · Historicamente gratuita</small></span>
-    <span class="dl"><span class="est">A confirmar</span><small>Historicamente fev a mar</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Criada em 2002, exibe qualquer tipo de filme, de qualquer duração e formato, com foco em produção independente e livre. A edição de 2025 teve mais de 170 filmes e cabines imersivas com obras mais visuais do que narrativas. <a href="https://www.mostradofilmelivre.com" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="olhar" aria-label="Olhar de Cinema">
+    <span class="dl">2 abr 2027<small class="open">faltam 139 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Um dos principais eventos de cinema e arte experimental do país. A 11ª edição acontece na Cinemateca do MAM, no CCBB e no CCJF. Aceita filmes de qualquer duração, games e códigos criativos, instalações e videoarte, com categorias separadas para obras brasileiras. <a href="https://filmfreeway.com/FestivalECRA" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="olhar" aria-label="Olhar de Cinema">
     <span class="dot tbc"></span>
     <span class="nm"><b>Olhar de Cinema</b><small>Curitiba, PR · Grátis para filmes brasileiros</small></span>
-    <span class="dl"><span class="est">A confirmar</span><small>Junho de 2027</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival internacional de cinema independente com a mostra Novos Olhares, dedicada a propostas estéticas fora do padrão. Aceita curtas e longas de todos os gêneros e nacionalidades. <a href="https://www.olhardecinema.com.br" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="fortaleza" aria-label="Festival Fortaleza de Cinema">
+    <span class="dl"><span class="est">A confirmar</span><small>Junho de 2027</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival internacional de cinema independente com a mostra Novos Olhares, dedicada a propostas estéticas fora do padrão. A 15ª edição foi de 4 a 13 de junho de 2026. <a href="https://www.olhardecinema.com.br" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="panorama" aria-label="Panorama Internacional Coisa de Cinema">
+    <span class="dot tbc"></span>
+    <span class="nm"><b>Panorama Internacional Coisa de Cinema</b><small>Salvador e Cachoeira, BA · Historicamente gratuita</small></span>
+    <span class="dl"><span class="est">A confirmar</span><small>Março a abril (histórico)</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival baiano com competitivas nacional, baiana e internacional. A 21ª edição foi de 25 de março a 1º de abril de 2026, no Cine Glauber Rocha e em Cachoeira. <a href="https://panorama.coisadecinema.com.br" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="fortaleza" aria-label="Festival Fortaleza de Cinema">
     <span class="dot "></span>
     <span class="nm"><b>Festival Fortaleza de Cinema</b><small>Fortaleza, CE · Gratuita</small></span>
     <span class="dl">3 nov 2026<small class="">há 11 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival novo de curtas na Caixa Cultural Fortaleza, com mostras de curtas internacionais (Jangada), brasileiros (Mar) e da capital cearense. Aceita ficção, documentário e experimental. <a href="https://fortalezadecinema.com/inscricoes/" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="tiradentes" aria-label="Mostra de Cinema de Tiradentes">
     <span class="dot "></span>
     <span class="nm"><b>Mostra de Cinema de Tiradentes</b><small>Tiradentes, MG · Gratuita</small></span>
-    <span class="dl">28 out 2026<small class="">há 17 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Abre o calendário do cinema brasileiro. As mostras Aurora e Olhos Livres são o principal espaço competitivo para longas autorais e de linguagem inventiva, ao lado das mostras de curtas. A chamada da 30ª edição fechou em 28 de outubro. <a href="https://universoproducao.com.br/registration/inscricao-de-filmes-30a-mostra-tiradentes/" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="forumdoc" aria-label="forumdoc.bh, Festival do Filme Documentário e Etnográfico">
-    <span class="dot "></span>
-    <span class="nm"><b>forumdoc.bh, Festival do Filme Documentário e Etnográfico</b><small>Belo Horizonte, MG · Gratuita</small></span>
-    <span class="dl">25 jun 2026<small class="">há 142 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Fórum de antropologia e cinema realizado desde 1997, com competitivas nacional e internacional. Bom destino para documentários de forma livre e ensaística. <a href="https://forumdoc.org.br" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="festcurtasbh" aria-label="FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">
+    <span class="dl">28 out 2026<small class="">há 17 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Abre o calendário do cinema brasileiro. As mostras Aurora e Olhos Livres são o principal espaço competitivo para longas autorais e de linguagem inventiva, ao lado das mostras de curtas. A chamada da 30ª edição fechou em 28 de outubro. <a href="https://universoproducao.com.br/registration/inscricao-de-filmes-30a-mostra-tiradentes/" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="festcurtasbh" aria-label="FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte">
     <span class="dot "></span>
     <span class="nm"><b>FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte</b><small>Belo Horizonte, MG · Gratuita</small></span>
     <span class="dl">17 mai 2026<small class="">há 181 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival de curtas no Cine Humberto Mauro, Palácio das Artes, que depois circula por mais de 30 cidades mineiras. Aceita todos os gêneros, inclusive experimental, em película ou digital. <a href="https://www.festcurtasbh.com.br" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="cen" aria-label="Cine Esquema Novo, Arte Audiovisual Brasileira">
     <span class="dot "></span>
     <span class="nm"><b>Cine Esquema Novo, Arte Audiovisual Brasileira</b><small>Porto Alegre, RS · Historicamente gratuita</small></span>
-    <span class="dl"><span class="est">Encerrado</span><small>Até 1º jul 2026 (realizado)</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival dedicado às relações entre cinema, artes visuais e práticas contemporâneas do audiovisual. Aceita obras de qualquer duração ou formato, pensadas para cinema ou galeria. A edição 2026 selecionou 36 obras entre 840 inscrições para a Competitiva Brasil. <a href="https://www.cineesquemanovo.org" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="janela" aria-label="Janela Internacional de Cinema do Recife">
+    <span class="dl"><span class="est">Encerrado</span><small>Até 1º jul 2026 (realizado)</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival dedicado às relações entre cinema, artes visuais e práticas contemporâneas do audiovisual. Aceita obras de qualquer duração ou formato, pensadas para cinema ou galeria. Em 2026, o Grande Prêmio foi para Sem Título #11, Um Analecto à Mula, de Carlos Adriano. <a href="https://www.cineesquemanovo.org" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="forumdoc" aria-label="forumdoc.bh, Festival do Filme Documentário e Etnográfico">
+    <span class="dot "></span>
+    <span class="nm"><b>forumdoc.bh, Festival do Filme Documentário e Etnográfico</b><small>Belo Horizonte, MG · Gratuita</small></span>
+    <span class="dl"><span class="est">Encerrado</span><small>19 a 29 nov 2026</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Fórum de antropologia e cinema realizado desde 1997, com mostras nacional e internacional. A 30ª edição acontece de 19 a 29 de novembro de 2026, com mostra retrospectiva de Gustavo Caboco. <a href="https://www.forumdoc.org.br" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="fronteira" aria-label="Fronteira, Festival Internacional do Filme Documentário e Experimental">
+    <span class="dot "></span>
+    <span class="nm"><b>Fronteira, Festival Internacional do Filme Documentário e Experimental</b><small>Goiânia, GO / Brasília, DF · Historicamente gratuita</small></span>
+    <span class="dl"><span class="est">Encerrado</span><small>Sem edição desde 2023</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival dedicado à fronteira entre documentário e cinema experimental. A 5ª edição, em 2023, mudou-se para Brasília e recebeu 1.021 inscrições de 47 países; desde então o site não anunciou nova edição. <a href="https://www.fronteirafestival.com" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="janela" aria-label="Janela Internacional de Cinema do Recife">
     <span class="dot "></span>
     <span class="nm"><b>Janela Internacional de Cinema do Recife</b><small>Recife, PE · Gratuita</small></span>
     <span class="dl"><span class="est">Encerrado</span><small>28 out a 1º nov 2026 (realizado)</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival com curadoria atenta a formas livres de cinema. A 17ª edição exibiu 31 filmes, entre curtas e longas, no Cinema São Luiz. <a href="https://www.janeladecinema.com.br" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="kinoforum" aria-label="Kinoforum, Festival Internacional de Curtas de São Paulo">
     <span class="dot "></span>
     <span class="nm"><b>Kinoforum, Festival Internacional de Curtas de São Paulo</b><small>São Paulo, SP · Gratuita</small></span>
-    <span class="dl"><span class="est">Encerrado</span><small>20 a 30 ago 2026 (realizado)</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Um dos maiores festivais de curtas do mundo, gratuito, com programação latino-americana e internacional ampla. A edição 2026 recebeu 3.329 inscrições e exibiu 260 filmes. <a href="https://kinoforum.org" target="_blank" rel="noopener">Página da chamada</a></div><div class="ghead">Internacional<span>38 festivais, 23 abertos</span></div><button class="frow " data-sel="cosmic" aria-label="Cosmic Rays Film Festival">
+    <span class="dl"><span class="est">Encerrado</span><small>20 a 30 ago 2026 (realizado)</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Um dos maiores festivais de curtas do mundo, gratuito, com programação latino-americana e internacional ampla. A edição 2026 recebeu 3.329 inscrições e exibiu 260 filmes. <a href="https://kinoforum.org" target="_blank" rel="noopener">Página da chamada</a></div><div class="ghead">Internacional<span>40 festivais, 24 abertos</span></div><button class="frow " data-sel="cosmic" aria-label="Cosmic Rays Film Festival">
     <span class="dot soon"></span>
     <span class="nm"><b>Cosmic Rays Film Festival</b><small>Chapel Hill, EUA · Com taxa</small></span>
     <span class="dl">16 nov 2026<small class="soon">faltam 2 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Curtas experimentais formalmente inventivos e formas híbridas entre gêneros e modos de fazer cinema. <a href="https://cloud.expcinema.org/site/en/call/2027-cosmic-rays-film-festival-call-entries" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="onioncity" aria-label="Onion City Experimental Film Festival">
@@ -801,16 +875,19 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
     <span class="dl">31 jan 2027<small class="open">faltam 78 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival de curtas conhecido pela abertura a formas experimentais. Aceita todos os gêneros; a competição internacional indica um filme ao Prêmio do Cinema Europeu. <a href="https://filmfreeway.com/KurzfilmFestivalHamburg" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="crossroads" aria-label="CROSSROADS, San Francisco Cinematheque">
     <span class="dot open"></span>
     <span class="nm"><b>CROSSROADS, San Francisco Cinematheque</b><small>São Francisco, EUA · US$ 25 a 30</small></span>
-    <span class="dl">28 fev 2027<small class="open">faltam 106 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Uma das principais vitrines de filme, vídeo e performance de vanguarda dos EUA, curada pela San Francisco Cinematheque, fundada por Bruce Baillie. Não exibe instalações nem narrativa ou documentário convencionais. <a href="https://www.sfcinematheque.org/2027-call-for-entries/" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="adriatikino" aria-label="Adriatikino">
+    <span class="dl">28 fev 2027<small class="open">faltam 106 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Uma das principais vitrines de filme, vídeo e performance de vanguarda dos EUA, curada pela San Francisco Cinematheque, fundada por Bruce Baillie. Não exibe instalações nem narrativa ou documentário convencionais. <a href="https://www.sfcinematheque.org/2027-call-for-entries/" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="fracto" aria-label="FRACTO Experimental Film Encounter">
+    <span class="dot open"></span>
+    <span class="nm"><b>FRACTO Experimental Film Encounter</b><small>Berlim, Alemanha · Com taxa</small></span>
+    <span class="dl">1 mar 2027<small class="open">faltam 107 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival berlinense de práticas de imagem em movimento que desafiam a forma cinematográfica. Aceita curtas, médias e projetos de cinema expandido. Sessões no ACUD macht neu. <a href="https://fractofilm.com" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="adriatikino" aria-label="Adriatikino">
     <span class="dot open"></span>
     <span class="nm"><b>Adriatikino</b><small>Fermo, Itália · Com taxa</small></span>
     <span class="dl">7 mar 2027<small class="open">faltam 113 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Chamada aberta de festival italiano com espaço para curtas experimentais. <a href="https://cloud.expcinema.org/site/en/call/adriatikino-2027-open-call" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="afv" aria-label="art+film+vienna">
     <span class="dot open"></span>
     <span class="nm"><b>art+film+vienna</b><small>Viena, Áustria · Com taxa</small></span>
-    <span class="dl">14 mar 2027<small class="open">faltam 120 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival criado em 2024 para práticas experimentais de imagem em movimento dentro e fora da tela de cinema, cruzando filme, artes visuais, performance, som e mídia digital. <a href="https://cloud.expcinema.org/site/en/call/artfilmvienna-2027" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="fracto" aria-label="FRACTO Experimental Film Encounter">
+    <span class="dl">14 mar 2027<small class="open">faltam 120 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival criado em 2024 para práticas experimentais de imagem em movimento dentro e fora da tela de cinema, cruzando filme, artes visuais, performance, som e mídia digital. <a href="https://cloud.expcinema.org/site/en/call/artfilmvienna-2027" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="mediacity" aria-label="Media City Film Festival">
     <span class="dot open"></span>
-    <span class="nm"><b>FRACTO Experimental Film Encounter</b><small>Berlim, Alemanha · Ver regulamento</small></span>
-    <span class="dl">Março de 2027<small class="open">faltam 137 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival berlinense de práticas de imagem em movimento que desafiam a forma cinematográfica. Aceita curtas, médias e projetos de cinema expandido. <a href="https://expcinema.org/site/en/call/fracto-2027-call-entries" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="viladoconde" aria-label="Curtas Vila do Conde, Competição Experimental">
+    <span class="nm"><b>Media City Film Festival</b><small>Windsor, Canadá / Detroit, EUA · Historicamente gratuita</small></span>
+    <span class="dl">10 abr 2027<small class="open">faltam 147 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival internacional de filme de artista, realizado dos dois lados da fronteira EUA–Canadá, com cachê para todos os selecionados. O site informa que a chamada reabre no outono (hemisfério norte) de 2026 e vai até 10 de abril de 2027. <a href="https://mediacityfilmfestival.com" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="viladoconde" aria-label="Curtas Vila do Conde, Competição Experimental">
     <span class="dot open"></span>
     <span class="nm"><b>Curtas Vila do Conde, Competição Experimental</b><small>Vila do Conde, Portugal · Ver plataforma</small></span>
     <span class="dl">30 abr 2027<small class="open">faltam 167 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival português de curtas com uma competição dedicada ao cinema experimental. Inscrições por FilmFreeway, Short Film Depot ou Festhome. <a href="https://festival.curtas.pt/en/info/call-for-entries/" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="braziers" aria-label="Braziers International Film Festival">
@@ -819,7 +896,13 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
     <span class="dl">30 mai 2027<small class="open">faltam 197 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival comunitário programado por artistas-cineastas em Braziers Park, com espaço para filme de artista experimental ao lado de ficção, animação e documentário. <a href="https://expcinema.org/site/en/call/braziers-international-film-festival-2027-call-entries" target="_blank" rel="noopener">Inscrição</a></div><button class="frow " data-sel="courtisane" aria-label="Courtisane Festival">
     <span class="dot tbc"></span>
     <span class="nm"><b>Courtisane Festival</b><small>Gante, Bélgica · Historicamente gratuita</small></span>
-    <span class="dl"><span class="est">A confirmar</span><small>Março a abril de 2027</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival e plataforma de cinema e artes audiovisuais que explora as relações entre imagem e realidade, estética e política. A programação internacional é feita por convite; inscrições abertas valem para artistas e filmes da Bélgica. <a href="https://www.courtisane.be/en/entries" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="berlinale" aria-label="Berlinale Shorts e Forum Expanded">
+    <span class="dl"><span class="est">A confirmar</span><small>Março a abril de 2027</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival e plataforma de cinema e artes audiovisuais que explora as relações entre imagem e realidade, estética e política. A programação internacional é feita por convite; inscrições abertas valem para artistas e filmes da Bélgica. <a href="https://www.courtisane.be/en/entries" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="exis" aria-label="EXiS, Experimental Film and Video Festival in Seoul">
+    <span class="dot tbc"></span>
+    <span class="nm"><b>EXiS, Experimental Film and Video Festival in Seoul</b><small>Seul, Coreia do Sul · A confirmar</small></span>
+    <span class="dl"><span class="est">A confirmar</span><small>Data a anunciar</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Principal festival de cinema experimental da Ásia, com competição internacional e a competição EX-Now. <a href="https://ex-is.org" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="rencontres" aria-label="Rencontres Internationales Paris/Berlin">
+    <span class="dot tbc"></span>
+    <span class="nm"><b>Rencontres Internationales Paris/Berlin</b><small>Paris, França / Berlim, Alemanha · Programa principal gratuito</small></span>
+    <span class="dl"><span class="est">A confirmar</span><small>Paris em novembro, Berlim em junho (histórico)</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Plataforma de novo cinema e arte contemporânea, com edições em Paris e Berlim. Aceita filme, vídeo e multimídia de qualquer origem, duração e gênero. <a href="https://art-action.org/call" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="berlinale" aria-label="Berlinale Shorts e Forum Expanded">
     <span class="dot "></span>
     <span class="nm"><b>Berlinale Shorts e Forum Expanded</b><small>Berlim, Alemanha · € 75</small></span>
     <span class="dl">4 nov 2026<small class="">há 10 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">A competição de curtas da Berlinale aceita ficção, documentário, animação, experimental e híbridos. O Forum Expanded é uma das vitrines mais importantes de imagem em movimento experimental. <a href="https://berlinale.de/en/film-entry/submission/start.html" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="tampere" aria-label="Tampere Film Festival">
@@ -855,10 +938,7 @@ html:not(.js) .split,html:not(.js) .cal-body{grid-template-columns:minmax(0,1fr)
     <span class="dl">30 set 2026<small class="">há 45 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">O festival de cinema experimental mais antigo da América do Norte, fundado em 1963. Aceita obras de qualquer duração e gênero que desafiem a narrativa convencional. <a href="https://filmfreeway.com/AAFilmFest" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="iffr" aria-label="International Film Festival Rotterdam">
     <span class="dot "></span>
     <span class="nm"><b>International Film Festival Rotterdam</b><small>Roterdã, Países Baixos · € 40 a 70 curtas</small></span>
-    <span class="dl">15 set 2026<small class="">há 60 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Grande vitrine do cinema independente e inovador. A competição Tiger Short exige estreia mundial para curtas de até 63 minutos. <a href="https://iffr.com/en/film-entry" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="mediacity" aria-label="Media City Film Festival">
-    <span class="dot "></span>
-    <span class="nm"><b>Media City Film Festival</b><small>Windsor, Canadá / Detroit, EUA · Gratuita</small></span>
-    <span class="dl">1 mai 2026<small class="">há 197 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Festival internacional de filme de artista, realizado dos dois lados da fronteira EUA–Canadá. Sem taxa e com cachê para todos os selecionados. <a href="https://mediacityfilmfestival.com" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="images" aria-label="Images Festival">
+    <span class="dl">15 set 2026<small class="">há 60 dias</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Grande vitrine do cinema independente e inovador. A competição Tiger Short exige estreia mundial para curtas de até 63 minutos. <a href="https://iffr.com/en/film-entry" target="_blank" rel="noopener">Página da chamada</a></div><button class="frow " data-sel="images" aria-label="Images Festival">
     <span class="dot "></span>
     <span class="nm"><b>Images Festival</b><small>Toronto, Canadá · A confirmar</small></span>
     <span class="dl"><span class="est">Encerrado</span><small>Abril (histórico)</small></span><svg width="8" height="12" viewBox="0 0 8 12" aria-hidden="true"><path d="M2 1.5l4.5 4.5L2 10.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button><div class="sdetail">Desde 1987, uma das plataformas mais duradouras para cinema independente e media art, com programa em sala, exposições e performances. <a href="https://imagesfestival.com/opportunities" target="_blank" rel="noopener">Página da chamada</a></div></div>
@@ -898,17 +978,17 @@ const FEST = [
 
   {id:"olhar", scope:"br", name:"Olhar de Cinema", ed:"16ª edição", city:"Curitiba, PR",
    open:null, deadline:null, state:"tbc", fest:"Junho de 2027", festEst:true, free:true,
-   fee:"Grátis para filmes brasileiros", expected:"Chamada costuma abrir em jan e fechar no início de mar",
+   fee:"Grátis para filmes brasileiros", expected:"Chamada 2027 ainda não publicada; em 2026 o prazo foi 26 fev",
    link:"https://www.olhardecinema.com.br", site:"https://www.olhardecinema.com.br",
-   desc:"Festival internacional de cinema independente com a mostra Novos Olhares, dedicada a propostas estéticas fora do padrão. Aceita curtas e longas de todos os gêneros e nacionalidades.",
-   facts:[["Mostras-chave","Competitiva, Novos Olhares"],["Aceita","Nacionais e internacionais"]]},
+   desc:"Festival internacional de cinema independente com a mostra Novos Olhares, dedicada a propostas estéticas fora do padrão. A 15ª edição foi de 4 a 13 de junho de 2026.",
+   facts:[["Aceita","Curtas e longas de todos os gêneros, inéditos no Brasil"],["Mostras-chave","Competitiva, Novos Olhares"]]},
 
   {id:"kinoforum", scope:"br", name:"Kinoforum, Festival Internacional de Curtas de São Paulo", ed:"37ª edição", city:"São Paulo, SP",
    open:null, deadline:null, state:"closed", fest:"20 a 30 ago 2026 (realizado)", free:true,
-   fee:"Gratuita", expected:"Próxima chamada prevista para mar a abr de 2027",
+   fee:"Gratuita", expected:"Chamada da 38ª edição ainda não publicada",
    link:"https://kinoforum.org", site:"https://kinoforum.org",
    desc:"Um dos maiores festivais de curtas do mundo, gratuito, com programação latino-americana e internacional ampla. A edição 2026 recebeu 3.329 inscrições e exibiu 260 filmes.",
-   facts:[["Duração","Curtas (até 25 min na edição 2025)"],["Novo prêmio","Prêmio Zita Carvalhosa, R$ 20 mil para estreantes brasileiros"]]},
+   facts:[["Novo prêmio","Prêmio Zita Carvalhosa, R$ 20 mil para estreantes brasileiros"]]},
 
   {id:"janela", scope:"br", name:"Janela Internacional de Cinema do Recife", ed:"17ª edição", city:"Recife, PE",
    open:null, deadline:null, state:"closed", fest:"28 out a 1º nov 2026 (realizado)", free:true,
@@ -918,17 +998,17 @@ const FEST = [
    facts:[["Aceita","Curtas nacionais e internacionais"]]},
 
   {id:"fronteira", scope:"br", name:"Fronteira, Festival Internacional do Filme Documentário e Experimental", ed:"", city:"Goiânia, GO / Brasília, DF",
-   open:null, deadline:null, state:"tbc", fest:"Sem edição anunciada", festEst:true, free:true,
-   fee:"Historicamente gratuita", expected:"Última edição localizada: 2023, em Brasília",
+   open:null, deadline:null, state:"closed", fest:"Sem edição desde 2023", festEst:true, free:true,
+   fee:"Historicamente gratuita", expected:"Site sem notícias desde ago 2023 (5ª edição)",
    link:"https://www.fronteirafestival.com", site:"https://www.fronteirafestival.com",
-   desc:"Único festival brasileiro com o experimental no nome, trabalhando a fronteira entre documentário e cinema experimental. Aceitava obras de qualquer duração e nacionalidade, inclusive work in progress.",
-   facts:[["Aceita","Qualquer duração e nacionalidade"]]},
+   desc:"Festival dedicado à fronteira entre documentário e cinema experimental. A 5ª edição, em 2023, mudou-se para Brasília e recebeu 1.021 inscrições de 47 países; desde então o site não anunciou nova edição.",
+   facts:[["Aceita","Qualquer duração e nacionalidade (última chamada)"]]},
 
   {id:"cen", scope:"br", name:"Cine Esquema Novo, Arte Audiovisual Brasileira", ed:"16ª edição", city:"Porto Alegre, RS",
    open:null, deadline:null, state:"closed", fest:"Até 1º jul 2026 (realizado)", free:true,
-   fee:"Historicamente gratuita", expected:"Próxima chamada ainda não anunciada",
+   fee:"Historicamente gratuita", expected:"Sem chamada nova no site (última notícia: 2 jul 2026)",
    link:"https://www.cineesquemanovo.org", site:"https://www.cineesquemanovo.org",
-   desc:"Festival dedicado às relações entre cinema, artes visuais e práticas contemporâneas do audiovisual. Aceita obras de qualquer duração ou formato, pensadas para cinema ou galeria. A edição 2026 selecionou 36 obras entre 840 inscrições para a Competitiva Brasil.",
+   desc:"Festival dedicado às relações entre cinema, artes visuais e práticas contemporâneas do audiovisual. Aceita obras de qualquer duração ou formato, pensadas para cinema ou galeria. Em 2026, o Grande Prêmio foi para Sem Título #11, Um Analecto à Mula, de Carlos Adriano.",
    facts:[["Aceita","Obras feitas no Brasil ou por artistas brasileiros no exterior"],["Mostras","Competitiva Brasil, Outros Esquemas, artista convidada"]]},
 
   {id:"festcurtasbh", scope:"br", name:"FestCurtasBH, Festival Internacional de Curtas de Belo Horizonte", ed:"28ª edição", city:"Belo Horizonte, MG",
@@ -938,20 +1018,20 @@ const FEST = [
    desc:"Festival de curtas no Cine Humberto Mauro, Palácio das Artes, que depois circula por mais de 30 cidades mineiras. Aceita todos os gêneros, inclusive experimental, em película ou digital.",
    facts:[["Duração","Até 45 minutos"],["Aceita","Filmes finalizados em 2025 e 2026"],["Plataformas","Site oficial ou ShortFilmDepot"]]},
 
-  {id:"forumdoc", scope:"br", name:"forumdoc.bh, Festival do Filme Documentário e Etnográfico", ed:"",
+  {id:"forumdoc", scope:"br", name:"forumdoc.bh, Festival do Filme Documentário e Etnográfico", ed:"30ª edição",
    city:"Belo Horizonte, MG",
-   open:null, deadline:"2026-06-25", fest:"Novembro de 2026", festEst:true, free:true,
-   fee:"Gratuita", expected:"Próxima chamada prevista para o meio de 2027",
-   link:"https://forumdoc.org.br", site:"https://forumdoc.org.br",
-   desc:"Fórum de antropologia e cinema realizado desde 1997, com competitivas nacional e internacional. Bom destino para documentários de forma livre e ensaística.",
-   facts:[["Aceita","Qualquer formato, tema e duração; até 2 filmes por inscrito"],["Estreia","Não exige"],["Fonte do prazo","Agregador FestAgent; confirme no site"]]},
+   open:null, deadline:null, state:"closed", fest:"19 a 29 nov 2026", free:true,
+   fee:"Gratuita", expected:"Inscrições da 30ª edição encerradas",
+   link:"https://www.forumdoc.org.br", site:"https://www.forumdoc.org.br",
+   desc:"Fórum de antropologia e cinema realizado desde 1997, com mostras nacional e internacional. A 30ª edição acontece de 19 a 29 de novembro de 2026, com mostra retrospectiva de Gustavo Caboco.",
+   facts:[["Aceita","Qualquer formato, tema e duração"],["Estreia","Não exige"]]},
 
-  {id:"mfl", scope:"br", name:"Mostra do Filme Livre", ed:"", city:"Rio de Janeiro e São Paulo (CCBB)",
-   open:null, deadline:null, state:"tbc", fest:"Historicamente fev a mar", festEst:true, free:true,
-   fee:"Historicamente gratuita", expected:"Chamada 2027 não localizada",
-   link:"https://www.mostradofilmelivre.com", site:"https://www.mostradofilmelivre.com",
-   desc:"Criada em 2002, exibe qualquer tipo de filme, de qualquer duração e formato, com foco em produção independente e livre. A edição de 2025 teve mais de 170 filmes e cabines imersivas com obras mais visuais do que narrativas.",
-   facts:[["Aceita","Longas, médias e curtas brasileiros de qualquer formato"]]},
+  {id:"mfl", scope:"br", name:"Mostra do Filme Livre", ed:"22ª edição", city:"São Paulo, Brasília e Rio de Janeiro",
+   open:"2026-10-07", deadline:"2026-11-15", fest:"A partir de março de 2027", festEst:true, free:true,
+   fee:"Gratuita", feeSub:"R$ 30 mil em prêmios",
+   link:"https://mostralivre.com", site:"https://mostralivre.com",
+   desc:"Criada em 2002, exibe cinema brasileiro independente de qualquer época, duração, formato e gênero, com entrada franca. Segundo o regulamento publicado no site oficial, as inscrições vão de 7 de outubro a 15 de novembro de 2026.",
+   facts:[["Aceita","Filmes que não passaram no circuito comercial nem em edições anteriores da MFL"],["Envio","Link do YouTube ou Vimeo; não aceita link de download"],["Resultado","Janeiro de 2027"],["Prêmios","R$ 30 mil divididos entre as sessões competitivas"]]},
 
   {id:"expbrasil", scope:"br", name:"Experimental Brasil", ed:"3ª edição", city:"Campos dos Goytacazes, RJ",
    open:"2026-05-06", deadline:"2026-12-30", fest:"18 e 19 jan 2027", festEst:true, free:false,
@@ -979,6 +1059,13 @@ const FEST = [
    link:"https://curtacinema.com.br", site:"https://curtacinema.com.br",
    desc:"Um dos festivais de curta mais antigos do país, com competições nacional e internacional que qualificam para o Oscar. Aceita todos os gêneros, inclusive experimental.",
    facts:[["Duração","Até 30 min"],["Qualificação","Vencedores concorrem a vaga no Oscar de curta"],["Edição anterior","5.686 filmes inscritos"]]},
+
+  {id:"panorama", scope:"br", name:"Panorama Internacional Coisa de Cinema", ed:"22ª edição", city:"Salvador e Cachoeira, BA",
+   open:null, deadline:null, state:"tbc", fest:"Março a abril (histórico)", festEst:true, free:true,
+   fee:"Historicamente gratuita", expected:"Chamada 2027 não localizada; em 2026 o prazo foi 31 out 2025",
+   link:"https://panorama.coisadecinema.com.br", site:"https://panorama.coisadecinema.com.br",
+   desc:"Festival baiano com competitivas nacional, baiana e internacional. A 21ª edição foi de 25 de março a 1º de abril de 2026, no Cine Glauber Rocha e em Cachoeira.",
+   facts:[]},
 
   /* ================== INTERNACIONAL ================== */
   {id:"annarbor", scope:"int", name:"Ann Arbor Film Festival", ed:"65ª edição", city:"Ann Arbor, EUA",
@@ -1071,12 +1158,12 @@ const FEST = [
    desc:"Grande vitrine do cinema independente e inovador. A competição Tiger Short exige estreia mundial para curtas de até 63 minutos.",
    facts:[["Estreia","Mundial, internacional ou europeia para curtas"],["Próxima chamada","Costuma abrir em maio"]]},
 
-  {id:"mediacity", scope:"int", name:"Media City Film Festival", ed:"28ª edição", city:"Windsor, Canadá / Detroit, EUA",
-   open:null, deadline:"2026-05-01", fest:"15 a 19 set 2026 (realizado)", free:true,
-   fee:"Gratuita", expected:"Chamada 2027 prevista para o 1º semestre",
+  {id:"mediacity", scope:"int", name:"Media City Film Festival", ed:"29ª edição", city:"Windsor, Canadá / Detroit, EUA",
+   open:null, deadline:"2027-04-10", fest:"14 a 18 set 2027", free:true,
+   fee:"Historicamente gratuita",
    link:"https://mediacityfilmfestival.com", site:"https://mediacityfilmfestival.com",
-   desc:"Festival internacional de filme de artista, realizado dos dois lados da fronteira EUA–Canadá. Sem taxa e com cachê para todos os selecionados.",
-   facts:[["Aceita","Obras concluídas nos últimos três anos"],["Cachê","Pago a todos os selecionados"]]},
+   desc:"Festival internacional de filme de artista, realizado dos dois lados da fronteira EUA–Canadá, com cachê para todos os selecionados. O site informa que a chamada reabre no outono (hemisfério norte) de 2026 e vai até 10 de abril de 2027.",
+   facts:[["Atenção","Confira no site se o formulário já está ativo"],["Resultado","Julho de 2027"],["Inscrições anteriores","Filmes inscritos na 28ª edição seguem valendo"]]},
 
   {id:"milan", scope:"int", name:"Milan Machinima Festival", ed:"10ª edição", city:"Milão, Itália",
    open:"2026-04-01", deadline:"2026-12-30", fest:"21 a 28 mar 2027", free:false,
@@ -1086,11 +1173,10 @@ const FEST = [
    facts:[["Foco","Game engines, simulação e código"]]},
 
   {id:"fracto", scope:"int", name:"FRACTO Experimental Film Encounter", ed:"10ª edição", city:"Berlim, Alemanha",
-   open:null, deadline:"2027-03-31", dlText:"Março de 2027", fest:"2027, data a anunciar", festEst:true, free:false,
-   fee:"Ver regulamento",
-   link:"https://expcinema.org/site/en/call/fracto-2027-call-entries", site:null,
-   desc:"Festival berlinense de práticas de imagem em movimento que desafiam a forma cinematográfica. Aceita curtas, médias e projetos de cinema expandido.",
-   facts:[["Aceita","Até 2 obras por artista, concluídas após 1º jan 2025"],["Prazo","Março de 2027; dia exato a confirmar"]]},
+   open:null, deadline:"2027-03-01", fest:"20 e 21 mai 2027", free:false,
+   fee:"Com taxa", link:"https://fractofilm.com", site:"https://fractofilm.com",
+   desc:"Festival berlinense de práticas de imagem em movimento que desafiam a forma cinematográfica. Aceita curtas, médias e projetos de cinema expandido. Sessões no ACUD macht neu.",
+   facts:[["Aceita","Até 2 obras por artista, concluídas após 1º jan 2025"]]},
 
   {id:"braziers", scope:"int", name:"Braziers International Film Festival", ed:"9ª edição", city:"Oxfordshire, Reino Unido",
    open:null, deadline:"2027-05-30", fest:"Agosto de 2027", free:false,
@@ -1223,13 +1309,27 @@ const FEST = [
    open:null, deadline:"2027-04-30", fest:"9 a 18 jul 2027", free:false,
    fee:"Ver plataforma", link:"https://festival.curtas.pt/en/info/call-for-entries/", site:"https://www.festival.curtas.pt",
    desc:"Festival português de curtas com uma competição dedicada ao cinema experimental. Inscrições por FilmFreeway, Short Film Depot ou Festhome.",
-   facts:[["Duração","Até 60 min"],["Aceita","Produções de 2026 ou 2027"]]}
+   facts:[["Duração","Até 60 min"],["Aceita","Produções de 2026 ou 2027"]]},
+
+  {id:"rencontres", scope:"int", name:"Rencontres Internationales Paris/Berlin", ed:"", city:"Paris, França / Berlim, Alemanha",
+   open:null, deadline:null, state:"tbc", fest:"Paris em novembro, Berlim em junho (histórico)", festEst:true, free:true,
+   fee:"Programa principal gratuito", expected:"Chamada 2026–2027 ainda não aberta; o site promete abrir em breve",
+   link:"https://art-action.org/call", site:"https://art-action.org",
+   desc:"Plataforma de novo cinema e arte contemporânea, com edições em Paris e Berlim. Aceita filme, vídeo e multimídia de qualquer origem, duração e gênero.",
+   facts:[["Prêmio","Moving Image Art Prize, com taxa, via FilmFreeway"]]},
+
+  {id:"exis", scope:"int", name:"EXiS, Experimental Film and Video Festival in Seoul", ed:"2027", city:"Seul, Coreia do Sul",
+   open:null, deadline:null, state:"tbc", fest:"Data a anunciar", festEst:true, free:false,
+   fee:"A confirmar", expected:"Chamada 2027 não publicada; a de 2026 foi divulgada em janeiro",
+   link:"https://ex-is.org", site:"https://ex-is.org",
+   desc:"Principal festival de cinema experimental da Ásia, com competição internacional e a competição EX-Now.",
+   facts:[]}
 ];
 
 
 const FEST_DATES = {
   annarbor:["2027-03-23","2027-03-28"], pdv:["2027-03-09","2027-03-14"], oberhausen:["2027-04-27","2027-05-02"],
-  iffr:["2027-01-28","2027-02-07"], mediacity:["2026-09-15","2026-09-19"], kinoforum:["2026-08-20","2026-08-30"],
+  iffr:["2027-01-28","2027-02-07"], mediacity:["2027-09-14","2027-09-18"], kinoforum:["2026-08-20","2026-08-30"],
   festcurtasbh:["2026-10-30","2026-11-08"], milan:["2027-03-21","2027-03-28"],
   tiradentes:["2027-01-22","2027-01-30"], janela:["2026-10-28","2026-11-01"], fortaleza:["2026-12-08","2026-12-13"],
   vienna:["2027-05-25","2027-05-30"], goshort:["2027-04-06","2027-04-11"], bafici:["2027-04-07","2027-04-18"],
@@ -1237,7 +1337,7 @@ const FEST_DATES = {
   regensburg:["2027-03-04","2027-03-14"],
   vitoria:["2027-05-15","2027-05-20"], curtacinema:["2027-03-17","2027-03-24"], onioncity:["2027-04-08","2027-04-11"],
   avvistamenti:["2026-12-26","2026-12-30"], istanbul:["2027-05-28","2027-06-03"], oddsends:["2027-02-19","2027-02-20"],
-  meshwork:["2027-02-25","2027-02-28"], hamburg:["2027-06-01","2027-06-06"], viladoconde:["2027-07-09","2027-07-18"]
+  meshwork:["2027-02-25","2027-02-28"], hamburg:["2027-06-01","2027-06-06"], viladoconde:["2027-07-09","2027-07-18"], forumdoc:["2026-11-19","2026-11-29"], fracto:["2027-05-20","2027-05-21"]
 };
 
 const SHORT = {emaf:"EMAF", iffr:"IFFR Rotterdam", kinoforum:"Kinoforum", festcurtasbh:"FestCurtasBH", forumdoc:"forumdoc.bh",
@@ -1249,7 +1349,7 @@ const SHORT = {emaf:"EMAF", iffr:"IFFR Rotterdam", kinoforum:"Kinoforum", festcu
   berlinale:"Berlinale", tampere:"Tampere", regensburg:"Regensburg",
   vitoria:"Festival de Vitória", curtacinema:"Curta Cinema", onioncity:"Onion City", avvistamenti:"Avvistamenti",
   woeff:"Wide Open", istanbul:"Istanbul Experimental", oddsends:"Odds & Ends", meshwork:"Meshwork", hamburg:"Hamburgo",
-  adriatikino:"Adriatikino", viladoconde:"Vila do Conde"};
+  adriatikino:"Adriatikino", viladoconde:"Vila do Conde", panorama:"Panorama Coisa de Cinema", rencontres:"Rencontres Internationales", exis:"EXiS"};
 
 /* -------------------- utilidades -------------------- */
 const M = ["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"];
@@ -1318,7 +1418,8 @@ function pager(key, n){
   if(FULL || n <= 1) return "";
   return `<button class="round" data-pg="${key}" data-d="-1" ${PG[key]===0?"disabled":""} aria-label="Página anterior">‹</button><span>${PG[key]+1} de ${n}</span><button class="round" data-pg="${key}" data-d="1" ${PG[key]===n-1?"disabled":""} aria-label="Próxima página">›</button>`;
 }
-const avail = el => FULL ? Infinity : Math.max(1, el.clientHeight);
+const isPhone = () => matchMedia("(max-width:760px)").matches;
+const avail = el => (FULL || isPhone()) ? Infinity : Math.max(1, el.clientHeight);
 
 /* -------------------- aba: fechando em breve -------------------- */
 $("r-open").textContent = openNow.length;
@@ -1343,7 +1444,7 @@ function renderAgora(){
   const list = openNow.slice().sort((a,b)=>parse(a.deadline)-parse(b.deadline));
   const box = $("cards-box"), grid = $("cards");
   let per = list.length;
-  if(!FULL){
+  if(!FULL && !isPhone()){
     const cols = Math.max(1, Math.floor((box.clientWidth+14)/(228+14)));
     const CH = matchMedia("(max-width:640px)").matches ? 178 : 206;
     const rows = Math.max(1, Math.floor((box.clientHeight+14)/(CH+14)));
@@ -1421,7 +1522,7 @@ function renderCal(){
   $("h-cal").innerHTML = `${MF[m][0].toUpperCase()+MF[m].slice(1)} <span>${y}</span>`;
   $("c-today").disabled = y===today0.getFullYear() && m===today0.getMonth();
   const daysEl = $("days");
-  const cellH = FULL ? 84 : daysEl.clientHeight / weeks;
+  const cellH = (FULL || isPhone()) ? 84 : daysEl.clientHeight / weeks;
   const maxChips = Math.max(1, Math.min(4, Math.floor((cellH - 32) / 17)));
   let html = "";
   for(let i=0;i<weeks*7;i++){
@@ -1555,6 +1656,8 @@ function route(){
   TABS.forEach(k=>{ $("p-"+k).classList.toggle("on", k===CUR); });
   document.querySelectorAll(".tabs a").forEach(a=>{ if(a.dataset.tab===CUR) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
   $("tip").classList.remove("on");
+  $("detail").classList.remove("open"); document.body.style.overflow = "";
+  if(isPhone()) window.scrollTo(0,0);
   requestAnimationFrame(renderCurrent);
 }
 function goFest(id){
@@ -1562,7 +1665,7 @@ function goFest(id){
   if(!passes(f)){ ST.scope="all"; ST.status="all"; ST.free=false; ST.q=""; $("f-q").value=""; syncControls(); save(); }
   SEL = id; JUMP = true;
   if(CUR==="festivais") renderList(); else location.hash = "festivais";
-  requestAnimationFrame(()=>{ if(matchMedia("(max-width:900px)").matches) $("detail").classList.add("open"); });
+  requestAnimationFrame(()=>{ if(matchMedia("(max-width:900px)").matches){ $("detail").classList.add("open"); if(isPhone()){ document.body.style.overflow = "hidden"; $("detail").scrollTop = 0; } } });
 }
 addEventListener("hashchange", route);
 
@@ -1570,8 +1673,8 @@ document.addEventListener("click", e=>{
   const g = e.target.closest("[data-go]");
   if(g){ e.preventDefault(); goFest(g.dataset.go); return; }
   const s = e.target.closest("[data-sel]");
-  if(s){ SEL = s.dataset.sel; document.querySelectorAll(".frow.sel").forEach(r=>r.classList.remove("sel")); s.classList.add("sel"); renderDetail(); if(matchMedia("(max-width:900px)").matches) $("detail").classList.add("open"); return; }
-  if(e.target.closest("[data-back]")){ $("detail").classList.remove("open"); return; }
+  if(s){ SEL = s.dataset.sel; document.querySelectorAll(".frow.sel").forEach(r=>r.classList.remove("sel")); s.classList.add("sel"); renderDetail(); if(matchMedia("(max-width:900px)").matches){ $("detail").classList.add("open"); if(isPhone()){ document.body.style.overflow = "hidden"; $("detail").scrollTop = 0; } } return; }
+  if(e.target.closest("[data-back]")){ $("detail").classList.remove("open"); document.body.style.overflow = ""; return; }
   const p = e.target.closest("[data-pg]");
   if(p){ PG[p.dataset.pg] += +p.dataset.d; renderCurrent(); return; }
   const n = e.target.closest("[data-nav]");
